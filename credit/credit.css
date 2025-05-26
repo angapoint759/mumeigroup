@@ -183,6 +183,7 @@ footer{
 .xbutton:hover,
 .twbutton:hover,
 .nibutton:hover,
-.ouensuru:hover {
+.ouensuru:hover,
+.kousikihp:hover{
   transform: scale(1.20);
 }
