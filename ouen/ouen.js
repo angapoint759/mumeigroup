@@ -1,7 +1,6 @@
 const webhookURL = 'https://discord.com/api/webhooks/1376156383438704784/dtRYOCzCTgfEix8Q43IFhoMrkYEyVxHFnv43qNOEqefeZI9meavJOaod7UFHEqoizMXz';
 
 document.getElementById('send_message').addEventListener('click', () => {
-  // ポップアップ作成
   const popup = document.createElement('div');
   popup.style.position = 'fixed';
   popup.style.top = '50%';
@@ -28,28 +27,23 @@ document.getElementById('send_message').addEventListener('click', () => {
     <button id="submit_btn" class="sousin" style="flex: 1;">応援</button>
   </div>
   `;
-
   document.body.appendChild(popup);
 
-  // アニメーション開始
   requestAnimationFrame(() => {
     popup.style.transform = 'translate(-50%, -50%) scale(1.1)';
     popup.style.opacity = '1';
-
     setTimeout(() => {
       popup.style.transform = 'translate(-50%, -50%) scale(1)';
     }, 350);
   });
 
-  // キャンセルボタン処理
   document.getElementById('cancel_btn').addEventListener('click', () => {
     popup.remove();
   });
 
-  // 送信ボタン処理
   document.getElementById('submit_btn').addEventListener('click', () => {
     const nickname = document.getElementById('nickname').value.trim();
-    const message = document.getElementById('message').value.trim();
+    let message = document.getElementById('message').value.trim();
 
     if (!nickname) {
       alert('ニックネームは必須です！');
@@ -58,6 +52,22 @@ document.getElementById('send_message').addEventListener('click', () => {
 
     if (!confirm('送信しますか？')) {
       return;
+    }
+    const ngWords = ['ばか', 'しね', 'くそ', 'さいあく', 'へんたい', 'あほ', 'きえろ', 'ぶす','だまれ','かす','ごみ','いきり','くず','じゅうしょ','とくてい','とつる','いえ','とつ','こいよ','こい'];
+    function normalizeText(str) {
+    return str
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[^\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}a-zA-Z0-9]/gu, '')
+    .replace(/[@|"'']/g, '')
+    .replace(/[\u30a1-\u30f6]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+    }
+
+    const normalized = normalizeText(message);
+    const containsNG = ngWords.some(word => normalized.includes(word));
+
+    if (containsNG) {
+      message = '不適切または悪質なメッセージのため削除しました';
     }
 
     const content = `応援ボタンが押されました！ありがとう！\nニックネーム: ${nickname}\n応援メッセージ(任意): ${message || '（メッセージはありません）'}`;

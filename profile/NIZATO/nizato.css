@@ -109,10 +109,21 @@ ol li h3 {
   transition: transform 0.2s;
   text-decoration: none;
 }
+.dibouuon {
+  padding: 10px 20px;
+  background-color: #e100ff;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
+}
 
 .yobutton:hover,
 .twbutton:hover,
-.nibutton:hover {
+.dibouuon:hover {
   transform: scale(1.20);
 }
 
